@@ -1,3 +1,5 @@
+app/OLD/
+app/wservices/
 system-config.js*
 app/**/*.js
 app/**/*.map
