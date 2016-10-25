@@ -23394,9 +23394,9 @@ webpackJsonp([1,2],[
 	var forms_1 = __webpack_require__(611);
 	var app_component_1 = __webpack_require__(612);
 	var hero_detail_component_1 = __webpack_require__(613);
-	var dashboard_component_1 = __webpack_require__(615);
-	var heroes_component_1 = __webpack_require__(616);
-	var hero_service_1 = __webpack_require__(617);
+	var dashboard_component_1 = __webpack_require__(617);
+	var heroes_component_1 = __webpack_require__(618);
+	var hero_service_1 = __webpack_require__(615);
 	var app_routing_module_1 = __webpack_require__(619);
 	var AppModule = (function () {
 	    function AppModule() {
@@ -28204,7 +28204,7 @@ webpackJsonp([1,2],[
 	var router_1 = __webpack_require__(351);
 	var common_1 = __webpack_require__(352);
 	var hero_1 = __webpack_require__(614);
-	var hero_service_1 = __webpack_require__(617);
+	var hero_service_1 = __webpack_require__(615);
 	var HeroDetailComponent = (function () {
 	    function HeroDetailComponent(heroService, route, location) {
 	        this.heroService = heroService;
@@ -28266,8 +28266,69 @@ webpackJsonp([1,2],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(350);
+	var mock_heroes_1 = __webpack_require__(616);
+	var HeroService = (function () {
+	    function HeroService() {
+	    }
+	    HeroService.prototype.getHeroes = function () {
+	        return Promise.resolve(mock_heroes_1.HEROES);
+	    };
+	    HeroService.prototype.getHero = function (id) {
+	        return this.getHeroes()
+	            .then(function (heroes) { return heroes.find(function (hero) { return hero.id === id; }); });
+	    };
+	    HeroService.prototype.getHeroesSlowly = function () {
+	        var _this = this;
+	        return new Promise(function (resolve) {
+	            return setTimeout(resolve, 2000);
+	        })
+	            .then(function () { return _this.getHeroes(); });
+	    };
+	    HeroService = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [])
+	    ], HeroService);
+	    return HeroService;
+	}());
+	exports.HeroService = HeroService;
+
+
+/***/ },
+/* 616 */
+/***/ function(module, exports) {
+
+	"use strict";
+	exports.HEROES = [
+	    { id: 11, name: 'Milton' },
+	    { id: 12, name: 'Jaime' },
+	    { id: 13, name: 'Marcelo' },
+	    { id: 14, name: 'Mabel' },
+	    { id: 15, name: 'Alvaro' },
+	    { id: 16, name: 'Carolina' },
+	    { id: 17, name: 'Alexandra' },
+	    { id: 18, name: 'Ruben' },
+	    { id: 19, name: 'Mauricio' },
+	    { id: 20, name: 'Esteban' }
+	];
+
+
+/***/ },
+/* 617 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(350);
 	var router_1 = __webpack_require__(351);
-	var hero_service_1 = __webpack_require__(617);
+	var hero_service_1 = __webpack_require__(615);
 	var DashboardComponent = (function () {
 	    function DashboardComponent(router, heroService) {
 	        this.router = router;
@@ -28297,7 +28358,7 @@ webpackJsonp([1,2],[
 
 
 /***/ },
-/* 616 */
+/* 618 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28312,7 +28373,7 @@ webpackJsonp([1,2],[
 	};
 	var core_1 = __webpack_require__(350);
 	var router_1 = __webpack_require__(351);
-	var hero_service_1 = __webpack_require__(617);
+	var hero_service_1 = __webpack_require__(615);
 	var HeroesComponent = (function () {
 	    function HeroesComponent(router, heroService) {
 	        this.router = router;
@@ -28346,67 +28407,6 @@ webpackJsonp([1,2],[
 
 
 /***/ },
-/* 617 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(350);
-	var mock_heroes_1 = __webpack_require__(618);
-	var HeroService = (function () {
-	    function HeroService() {
-	    }
-	    HeroService.prototype.getHeroes = function () {
-	        return Promise.resolve(mock_heroes_1.HEROES);
-	    };
-	    HeroService.prototype.getHero = function (id) {
-	        return this.getHeroes()
-	            .then(function (heroes) { return heroes.find(function (hero) { return hero.id === id; }); });
-	    };
-	    HeroService.prototype.getHeroesSlowly = function () {
-	        var _this = this;
-	        return new Promise(function (resolve) {
-	            return setTimeout(resolve, 2000);
-	        })
-	            .then(function () { return _this.getHeroes(); });
-	    };
-	    HeroService = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [])
-	    ], HeroService);
-	    return HeroService;
-	}());
-	exports.HeroService = HeroService;
-
-
-/***/ },
-/* 618 */
-/***/ function(module, exports) {
-
-	"use strict";
-	exports.HEROES = [
-	    { id: 11, name: 'Mr. Nice' },
-	    { id: 12, name: 'Narco' },
-	    { id: 13, name: 'Bombasto' },
-	    { id: 14, name: 'Celeritas' },
-	    { id: 15, name: 'Magneta' },
-	    { id: 16, name: 'RubberMan' },
-	    { id: 17, name: 'Dynama' },
-	    { id: 18, name: 'Dr IQ' },
-	    { id: 19, name: 'Magma' },
-	    { id: 20, name: 'Esteban' }
-	];
-
-
-/***/ },
 /* 619 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -28422,8 +28422,8 @@ webpackJsonp([1,2],[
 	};
 	var core_1 = __webpack_require__(350);
 	var router_1 = __webpack_require__(351);
-	var dashboard_component_1 = __webpack_require__(615);
-	var heroes_component_1 = __webpack_require__(616);
+	var dashboard_component_1 = __webpack_require__(617);
+	var heroes_component_1 = __webpack_require__(618);
 	var hero_detail_component_1 = __webpack_require__(613);
 	var routes = [
 	    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
