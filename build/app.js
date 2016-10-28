@@ -28296,6 +28296,20 @@ webpackJsonp([1,2],[
 	            .then(function () { return hero; })
 	            .catch(this.handleError);
 	    };
+	    HeroService.prototype.create = function (name) {
+	        return this.http
+	            .post(this.heroesUrl, JSON.stringify({ name: name }), { headers: this.headers })
+	            .toPromise()
+	            .then(function (res) { return res.json().data; })
+	            .catch(this.handleError);
+	    };
+	    HeroService.prototype.delete = function (id) {
+	        var url = this.heroesUrl + "/" + id;
+	        return this.http.delete(url, { headers: this.headers })
+	            .toPromise()
+	            .then(function () { return null; })
+	            .catch(this.handleError);
+	    };
 	    HeroService = __decorate([
 	        core_1.Injectable(), 
 	        __metadata('design:paramtypes', [http_1.Http])
@@ -28339,6 +28353,29 @@ webpackJsonp([1,2],[
 	    };
 	    HeroesComponent.prototype.gotoDetail = function () {
 	        this.router.navigate(['/detail', this.selectedHero.id]);
+	    };
+	    HeroesComponent.prototype.add = function (name) {
+	        var _this = this;
+	        name = name.trim();
+	        if (!name) {
+	            return;
+	        }
+	        this.heroService.create(name)
+	            .then(function (hero) {
+	            _this.heroes.push(hero);
+	            _this.selectedHero = null;
+	        });
+	    };
+	    HeroesComponent.prototype.delete = function (hero) {
+	        var _this = this;
+	        this.heroService
+	            .delete(hero.id)
+	            .then(function () {
+	            _this.heroes = _this.heroes.filter(function (h) { return h !== hero; });
+	            if (_this.selectedHero === hero) {
+	                _this.selectedHero = null;
+	            }
+	        });
 	    };
 	    HeroesComponent = __decorate([
 	        core_1.Component({
