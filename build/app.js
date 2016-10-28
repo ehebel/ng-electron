@@ -28265,6 +28265,7 @@ webpackJsonp([1,2],[
 	    function HeroService(http) {
 	        this.http = http;
 	        this.heroesUrl = 'app/heroes';
+	        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
 	    }
 	    HeroService.prototype.getHeroes = function () {
 	        return this.http.get(this.heroesUrl)
@@ -28286,6 +28287,14 @@ webpackJsonp([1,2],[
 	    HeroService.prototype.handleError = function (error) {
 	        console.error('An error occurred', error);
 	        return Promise.reject(error.message || error);
+	    };
+	    HeroService.prototype.update = function (hero) {
+	        var url = this.heroesUrl + "/" + hero.id;
+	        return this.http
+	            .put(url, JSON.stringify(hero), { headers: this.headers })
+	            .toPromise()
+	            .then(function () { return hero; })
+	            .catch(this.handleError);
 	    };
 	    HeroService = __decorate([
 	        core_1.Injectable(), 
@@ -28380,6 +28389,11 @@ webpackJsonp([1,2],[
 	    };
 	    HeroDetailComponent.prototype.goBack = function () {
 	        this.location.back();
+	    };
+	    HeroDetailComponent.prototype.save = function () {
+	        var _this = this;
+	        this.heroService.update(this.hero)
+	            .then(function () { return _this.goBack(); });
 	    };
 	    __decorate([
 	        core_1.Input(), 
