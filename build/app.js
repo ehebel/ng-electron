@@ -28308,7 +28308,7 @@ webpackJsonp([1,2],[
 	    { id: 17, name: 'Alexandra' },
 	    { id: 18, name: 'Ruben' },
 	    { id: 19, name: 'Mauricio' },
-	    { id: 20, name: 'Esteban' }
+	    { id: 20, name: 'Ximena' }
 	];
 
 
@@ -28348,7 +28348,7 @@ webpackJsonp([1,2],[
 	        core_1.Component({
 	            selector: 'my-dashboard',
 	            templateUrl: './dashboard.component.html',
-	            styleUrls: ['dashboard.component.css']
+	            styleUrls: ['./dashboard.component.css']
 	        }), 
 	        __metadata('design:paramtypes', [router_1.Router, hero_service_1.HeroService])
 	    ], DashboardComponent);
@@ -28381,7 +28381,7 @@ webpackJsonp([1,2],[
 	    }
 	    HeroesComponent.prototype.getHeroes = function () {
 	        var _this = this;
-	        this.heroService.getHeroesSlowly().then(function (heroes) { return _this.heroes = heroes; });
+	        this.heroService.getHeroes().then(function (heroes) { return _this.heroes = heroes; });
 	    };
 	    HeroesComponent.prototype.ngOnInit = function () {
 	        this.getHeroes();
