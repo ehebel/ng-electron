@@ -23389,6 +23389,7 @@ webpackJsonp([1,2],[
 	var __metadata = (this && this.__metadata) || function (k, v) {
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
+	__webpack_require__(621);
 	var core_1 = __webpack_require__(350);
 	var platform_browser_1 = __webpack_require__(354);
 	var forms_1 = __webpack_require__(611);
@@ -23401,6 +23402,7 @@ webpackJsonp([1,2],[
 	var heroes_component_1 = __webpack_require__(615);
 	var hero_detail_component_1 = __webpack_require__(616);
 	var hero_service_1 = __webpack_require__(614);
+	var hero_search_component_1 = __webpack_require__(622);
 	var AppModule = (function () {
 	    function AppModule() {
 	    }
@@ -23418,6 +23420,7 @@ webpackJsonp([1,2],[
 	                dashboard_component_1.DashboardComponent,
 	                hero_detail_component_1.HeroDetailComponent,
 	                heroes_component_1.HeroesComponent,
+	                hero_search_component_1.HeroSearchComponent
 	            ],
 	            providers: [hero_service_1.HeroService],
 	            bootstrap: [app_component_1.AppComponent]
@@ -29538,6 +29541,115 @@ webpackJsonp([1,2],[
 	    return AppComponent;
 	}());
 	exports.AppComponent = AppComponent;
+
+
+/***/ },
+/* 621 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	__webpack_require__(89);
+	__webpack_require__(102);
+	__webpack_require__(136);
+	__webpack_require__(156);
+	__webpack_require__(168);
+	__webpack_require__(172);
+	__webpack_require__(183);
+	__webpack_require__(213);
+	__webpack_require__(290);
+
+
+/***/ },
+/* 622 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(350);
+	var router_1 = __webpack_require__(351);
+	var Observable_1 = __webpack_require__(3);
+	var Subject_1 = __webpack_require__(2);
+	var hero_search_service_1 = __webpack_require__(623);
+	var HeroSearchComponent = (function () {
+	    function HeroSearchComponent(heroSearchService, router) {
+	        this.heroSearchService = heroSearchService;
+	        this.router = router;
+	        this.searchTerms = new Subject_1.Subject();
+	    }
+	    HeroSearchComponent.prototype.search = function (term) {
+	        this.searchTerms.next(term);
+	    };
+	    HeroSearchComponent.prototype.ngOnInit = function () {
+	        var _this = this;
+	        this.heroes = this.searchTerms
+	            .debounceTime(300)
+	            .distinctUntilChanged()
+	            .switchMap(function (term) { return term
+	            ? _this.heroSearchService.search(term)
+	            : Observable_1.Observable.of([]); })
+	            .catch(function (error) {
+	            console.log(error);
+	            return Observable_1.Observable.of([]);
+	        });
+	    };
+	    HeroSearchComponent.prototype.gotoDetail = function (hero) {
+	        var link = ['/detail', hero.id];
+	        this.router.navigate(link);
+	    };
+	    HeroSearchComponent = __decorate([
+	        core_1.Component({
+	            selector: 'hero-search',
+	            templateUrl: './hero-search.component.html',
+	            styleUrls: ['./hero-search.component.css'],
+	            providers: [hero_search_service_1.HeroSearchService]
+	        }), 
+	        __metadata('design:paramtypes', [hero_search_service_1.HeroSearchService, router_1.Router])
+	    ], HeroSearchComponent);
+	    return HeroSearchComponent;
+	}());
+	exports.HeroSearchComponent = HeroSearchComponent;
+
+
+/***/ },
+/* 623 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(350);
+	var http_1 = __webpack_require__(353);
+	var HeroSearchService = (function () {
+	    function HeroSearchService(http) {
+	        this.http = http;
+	    }
+	    HeroSearchService.prototype.search = function (term) {
+	        return this.http
+	            .get("app/heroes/?name=" + term)
+	            .map(function (r) { return r.json().data; });
+	    };
+	    HeroSearchService = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [http_1.Http])
+	    ], HeroSearchService);
+	    return HeroSearchService;
+	}());
+	exports.HeroSearchService = HeroSearchService;
 
 
 /***/ }
